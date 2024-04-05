@@ -99,7 +99,7 @@ resource "google_compute_instance" "ci_runner" {
 
   boot_disk {
     initialize_params {
-      image = "centos-cloud/centos-7"
+      image = "${var.ci_runner_machine_image}"
       size  = var.ci_runner_disk_size
       type  = "pd-standard"
     }
@@ -135,7 +135,7 @@ docker-machine create --driver google \
     --google-scopes https://www.googleapis.com/auth/cloud-platform \
     --google-disk-type pd-ssd \
     --google-disk-size ${var.ci_worker_disk_size} \
-    --google-machine-image ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220419 \
+    --google-machine-image ${var.ci_worker_machine_image} \
     --google-tags ${var.ci_worker_instance_tags} \
     --google-use-internal-ip \
     --google-network ${var.ci_runner_network} \
@@ -163,7 +163,7 @@ sudo gitlab-runner register -n \
     --machine-machine-name "${var.gcp_resource_prefix}-worker-%s" \
     --machine-machine-options "google-project=${var.gcp_project}" \
     --machine-machine-options "google-machine-type=${var.ci_worker_instance_type}" \
-    --machine-machine-options "google-machine-image=ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220419" \
+    --machine-machine-options "google-machine-image=${var.ci_worker_machine_image}" \
     --machine-machine-options "google-zone=${var.gcp_zone}" \
     --machine-machine-options "google-service-account=${google_service_account.ci_worker.email}" \
     --machine-machine-options "google-scopes=https://www.googleapis.com/auth/cloud-platform" \

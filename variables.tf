@@ -15,22 +15,27 @@
  */
 
 # Global options
+
 variable "ci_token" {
   type        = string
   description = "The runner registration token obtained from GitLab."
 }
+
 variable "gcp_project" {
   type        = string
   description = "The GCP project to deploy the runner into."
 }
+
 variable "gcp_zone" {
   type        = string
   description = "The GCP zone to deploy the runner into."
 }
+
 variable "gitlab_url" {
   type        = string
   description = "The URL of the GitLab server hosting the projects to be built."
 }
+
 variable "gcp_resource_prefix" {
   type    = string
   default = "gitlab-ci"
@@ -38,6 +43,7 @@ variable "gcp_resource_prefix" {
 }
 
 # Runner options
+
 variable "ci_runner_network" {
   type = string
   default = "default"
@@ -55,11 +61,13 @@ variable "ci_runner_disk_size" {
   default     = "20"
   description = "The size of the persistent disk in GB."
 }
+
 variable "ci_runner_gitlab_name" {
   type        = string
   default     = ""
   description = "Register the runner in GitLab using this name.  If empty the value \"gcp-$${var.gcp_project}\" will be used."
 }
+
 variable "ci_runner_gitlab_tags" {
     type        = string
     default     = ""
@@ -75,32 +83,50 @@ themselves run on separate worker instances.
 EOF
 }
 
+variable "ci_runner_machine_image" {
+  type        = string
+  default     = "rocky-linux-cloud/rocky-linux-9-v20240313"
+  description = "Machine image used for the runner instance"
+}
+
 # Worker options
+
 variable "ci_concurrency" {
   type        = number
   default     = 1
   description = "The maximum number of worker instances to create."
 }
+
 variable "ci_worker_disk_size" {
   type        = string
   default     = "10"
   description = "The size of the persistent disk in GB."
 }
+
 variable "ci_worker_idle_time" {
   type        = number
   default     = 300
   description = "The maximum idle time for workers before they are shutdown."
 }
+
 variable "ci_worker_instance_tags" {
   type        = string
   default     = "gitlab-ci-worker"
   description = "The GCP instance networking tags to apply."
 }
+
 variable "ci_worker_instance_type" {
   type        = string
   default     = "n1-standard-1"
   description = "The GCP instance type.  This can be adjusted to meet the demands of builds jobs."
 }
+
+variable "ci_worker_machine_image" {
+  type        = string
+  default     = "ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20240319"
+  description = "Machine image used for the worker instance"
+}
+
 variable "docker_privileged" {
   type        = string
   default     = "false"
@@ -108,6 +134,7 @@ variable "docker_privileged" {
 }
 
 # Pre/post hook scripts
+
 variable "pre_clone_script" {
   type        = string
   default     = ""
