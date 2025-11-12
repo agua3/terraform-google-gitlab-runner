@@ -121,6 +121,7 @@ set -e
 echo "Installing GitLab CI Runner"
 curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
 sudo yum install -y gitlab-runner
+sudo dnf install -y openssh-server openssh
 
 echo "Installing docker machine."
 curl -L https://gitlab-docker-machine-downloads.s3.amazonaws.com/v0.16.2-gitlab.22/docker-machine-Linux-x86_64 -o /tmp/docker-machine
