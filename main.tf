@@ -148,6 +148,9 @@ docker-machine rm -y ${var.gcp_resource_prefix}-test-machine
 echo "Setting GitLab concurrency"
 sed -i "s/concurrent = .*/concurrent = ${var.ci_concurrency}/" /etc/gitlab-runner/config.toml
 
+echo "Setting FF_NETWORK_PER_BUILD feature flag"
+sed -i '/^\[\[runners\]\]/a \  environment = ["FF_NETWORK_PER_BUILD=1"]' /etc/gitlab-runner/config.toml
+
 echo ${google_service_account_key.cache-user.private_key} | base64 -d > /etc/gitlab-runner/key.json
 
 echo "Registering GitLab CI runner with GitLab instance."
